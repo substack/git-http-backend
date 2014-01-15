@@ -13,7 +13,7 @@ var regex = {
     'git-upload-pack': /^\S+ ([0-9a-fA-F]+)/
 };
 var fields = {
-    'git-receive-pack': [ 'last', 'head', 'type', 'name' ],
+    'git-receive-pack': [ 'last', 'head', 'ref', 'name' ],
     'git-upload-pack': [ 'head' ]
 };
 

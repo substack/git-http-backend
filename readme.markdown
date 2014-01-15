@@ -20,6 +20,7 @@ var server = http.createServer(function (req, res) {
     req.pipe(backend(req.url, function (err, service) {
         if (err) return res.end(err + '\n');
         
+        res.setHeader('content-type', service.type);
         console.log(service.action, repo, service.fields);
         
         var ps = spawn(service.cmd, service.args.concat(dir));
@@ -48,7 +49,7 @@ info falafel.git {}
 push falafel.git { name: 'master',
   head: 'c1cb53f6dd18cc814f42c4205e8c7efef007c171',
   last: '008a0000000000000000000000000000000000000000',
-  type: 'heads',
+  ref: 'heads',
   branch: 'master' }
 To http://localhost:5000/falafel.git
  * [new branch]      master -> master
@@ -113,6 +114,8 @@ expects the `git-{receive,upload}-pack` data as input. You should wire up the
 * `service.action` - the type of request: `'info'`, `'tag'`, `'push'`, or
 `'pull'`
 * `service.fields` - the field data associated with the request action type
+* `service.type` - the `content-type` you should send for the response. Some git
+clients will not work if the proper `content-type` header hasn't been sent.
 
 For `'info`' actions, the `service.fields` is an empty object `{}`.
 
