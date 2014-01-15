@@ -10,6 +10,7 @@ var server = http.createServer(function (req, res) {
     req.pipe(backend(req.url, function (err, service) {
         if (err) return res.end(err + '\n');
         
+        res.setHeader('content-type', service.type);
         console.log(service.action, repo, service.fields);
         
         if (service.action === 'info') {
