@@ -3,7 +3,6 @@ var spawn = require('child_process').spawn;
 var path = require('path');
 var backend = require(path.join(__dirname, '..'));
 var fs = require('fs');
-var split = require('split');
 var npmOutputPath = path.join(__dirname, 'npm-install-dat-stdout.txt')
 
 module.exports = function() {
