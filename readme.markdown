@@ -5,6 +5,8 @@ serve a git repository over http
 Bring your own `git-{receive,upload}-pack` implementations or shell out to the
 system versions.
 
+[![build status](https://secure.travis-ci.org/substack/git-http-backend.png)](http://travis-ci.org/substack/git-http-backend)
+
 # example
 
 ``` js

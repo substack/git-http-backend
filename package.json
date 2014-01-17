@@ -4,7 +4,7 @@
   "description": "serve a git repository over http",
   "main": "index.js",
   "dependencies": {
-    "git-side-band-message": "~0.0.1",
+    "git-side-band-message": "~0.0.3",
     "inherits": "~2.0.1"
   },
   "scripts": {
