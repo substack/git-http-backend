@@ -30,7 +30,10 @@ test('all side band messages get received', function(t) {
             var actual = npmOutput.split('\n');
              
             for (var i = 0; i < lines.length; i++) {
-                t.true(lines[i].indexOf(actual[i]) > -1, 'lines match')
+                t.true(
+                    lines[i].indexOf(actual[i]) > -1,
+                    'lines match: ' + lines[i]
+                );
             }
             server.close();
             t.end();
