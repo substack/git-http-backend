@@ -11,8 +11,8 @@ var regex = {
         + '|^(0000)$'
     ),
     'git-upload-pack': /^\S+ ([0-9a-fA-F]+)/,
-    'done': /([0-9a-fA-F]+done|0000)\s+$/,
-    'have': /[0-9a-fA-F]+have\s [0-9a-fA-F]/
+    'done': /([0-9a-fA-F]+done|0000)\s*$/,
+    'have': /[0-9a-fA-F]+have\s[0-9a-fA-F]/
 };
 var fields = {
     'git-receive-pack': [ 'last', 'head', 'ref', 'name' ],
@@ -75,6 +75,10 @@ Backend.prototype._read = function (n) {
     else this._ready = n;
 };
 
+Backend.prototype._emitService = function() {
+    this.emit('service', new Service(this.serviceInfo, this));
+};
+
 Backend.prototype._write = function (buf, enc, next) {
     if (this._stream) {
         this._stream.push(buf);
@@ -101,6 +105,7 @@ Backend.prototype._write = function (buf, enc, next) {
             row[keys[i]] = m[i+1];
         }
         this.serviceInfo = row;
+        if ( this.service === 'git-receive-pack' ) return this._emitService();
     }
     else if (!this.serviceInfo && buf.length >= 512) {
         return this.emit('error', new Error('unrecognized input'));
@@ -108,13 +113,11 @@ Backend.prototype._write = function (buf, enc, next) {
 
     if (this.serviceInfo && regex.have.test(s)) {
         this.serviceInfo.have = true;
-        // emit early because request can no longer be clone
-        this.emit('service', new Service(this.serviceInfo, this));
-        return;
+        return this._emitService(); // emit early because request can no longer be clone
     }
 
     if ( this.serviceInfo && regex.done.test(s)) {
-        this.emit('service', new Service(this.serviceInfo, this));
+        this._emitService();
     } else {
         this._prev = (!this.serviceInfo ? buf : undefined);
         next();
