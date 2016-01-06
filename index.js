@@ -75,8 +75,8 @@ Backend.prototype._read = function (n) {
 
 Backend.prototype._write = function (buf, enc, next) {
     if (this._stream) {
-        this._stream.push(buf);
         this._next = next;
+        this._stream.push(buf);
         return;
     }
     else if (this.info) {
