@@ -1,6 +1,6 @@
 {
   "name": "git-http-backend",
-  "version": "0.1.6",
+  "version": "1.0.0",
   "description": "serve a git repository over http",
   "main": "index.js",
   "dependencies": {
