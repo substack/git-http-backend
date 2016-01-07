@@ -113,15 +113,15 @@ expects the `git-{receive,upload}-pack` data as input. You should wire up the
 
 * `service.cmd` - the git command name string
 * `service.args` - the arguments array that the git command expects
-* `service.action` - the type of request: `'info'`, `'tag'`, `'push'`, or
-`'pull'`
+* `service.action` - the type of request: `'info'`, `'tag'`, `'push'`, `'pull'`,
+or `'clone'`
 * `service.fields` - the field data associated with the request action type
 * `service.type` - the `content-type` you should send for the response. Some git
 clients will not work if the proper `content-type` header hasn't been sent.
 
 For `'info`' actions, the `service.fields` is an empty object `{}`.
 
-For `'pull'` actions, the `service.fields` are:
+For `'pull'` and `'clone'` actions, the `service.fields` are:
 
 * `service.fields.head` - the commit hash of the requested HEAD
 
