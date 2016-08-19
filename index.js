@@ -7,13 +7,13 @@ var Service = require('./lib/service.js');
 
 var regex = {
     'git-receive-pack': RegExp('([0-9a-fA-F]+) ([0-9a-fA-F]+)'
-        + ' refs\/(heads|tags)\/(.*?)( |00|\u0000)'
+        + ' (refs\/[^ \u0000]+)( |00|\u0000)'
         + '|^(0000)$'
     ),
     'git-upload-pack': /^\S+ ([0-9a-fA-F]+)/
 };
 var fields = {
-    'git-receive-pack': [ 'last', 'head', 'ref', 'name' ],
+    'git-receive-pack': [ 'last', 'head', 'refname' ],
     'git-upload-pack': [ 'head' ]
 };
 
